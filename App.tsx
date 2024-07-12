@@ -24,10 +24,21 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { buildUrl } from './ApiUrlBuilder';
+
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
+
+const queryClient: QueryClient = new QueryClient()
 
 function Section({children, title}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -56,11 +67,41 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 }
 
 function App(): React.JSX.Element {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MainContent/>
+    </QueryClientProvider>
+  )
+  
+}
+
+function MainContent(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["marvel1"],
+    queryFn: () => fetch(buildUrl()).then(res => res.json())
+    ,
+  })
+
+  if(isPending) {
+    return <Text>Loading..</Text>
+  }
+
+  if(error) {
+    console.log(`ERROR: ${error}`)
+    return <Text>ERROR</Text>
+  }
+
+  
+  console.log(JSON.stringify(data, null, 2));
+  
+
+
 
   return (
     <SafeAreaView style={backgroundStyle}>

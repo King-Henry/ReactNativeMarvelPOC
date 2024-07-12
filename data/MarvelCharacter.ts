@@ -12,11 +12,11 @@ export class MarvelCharacter extends Realm.Object<MarvelCharacter> {
     static schema: ObjectSchema = {
         name: 'MarvelCharacter',
         properties: {
-            _id: 'number',
+            _id: 'int',
             name: 'string',
             description: 'string?',
             thumbnailUrl: 'string',
-            comicsCount: 'number',
+            comicsCount: 'int',
             characterLink: 'string'
         },
         primaryKey: '_id',

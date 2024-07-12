@@ -24,7 +24,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { buildUrl } from './ApiUrlBuilder';
+import { buildUrl } from './domain/ApiUrlBuilder';
 
 import {
   useQuery,
@@ -33,6 +33,11 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+
+import { RealmProvider } from '@realm/react'
+import { MarvelCharacter } from './data/MarvelCharacter'
+import { styles } from './styles';
+
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -69,7 +74,9 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
-      <MainContent/>
+      <RealmProvider schema={[MarvelCharacter.schema]}>
+        <MainContent/>
+      </RealmProvider>
     </QueryClientProvider>
   )
   
@@ -98,9 +105,8 @@ function MainContent(): React.JSX.Element {
   }
 
   
-  console.log(JSON.stringify(data, null, 2));
-  
-
+ console.log(typeof data)
+ console.log(JSON.stringify(data.data?.results, null, 2))
 
 
   return (
@@ -109,8 +115,7 @@ function MainContent(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
+      <ScrollView contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
         <View
@@ -137,23 +142,6 @@ function MainContent(): React.JSX.Element {
   );
 }
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+
 
 export default App;

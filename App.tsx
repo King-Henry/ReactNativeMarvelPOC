@@ -37,6 +37,8 @@ import {
 import { RealmProvider } from '@realm/react'
 import { MarvelCharacter } from './data/MarvelCharacter'
 import { styles } from './styles';
+import { useApiResponseToCharactersUseCase } from './domain/ApiResponseToCharactersUseCase';
+import { useGetParsedCharactersForPage } from './domain/GetParsedCharactersForPage';
 
 
 type SectionProps = PropsWithChildren<{
@@ -89,25 +91,21 @@ function MainContent(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const { isPending, error, data } = useQuery({
-    queryKey: ["marvel1"],
-    queryFn: () => fetch(buildUrl()).then(res => res.json())
-    ,
-  })
+  const success = useGetParsedCharactersForPage(1)
 
-  if(isPending) {
-    return <Text>Loading..</Text>
-  }
+  // if(isPending) {
+  //   return <Text>Loading..</Text>
+  // }
 
-  if(error) {
-    console.log(`ERROR: ${error}`)
-    return <Text>ERROR</Text>
-  }
+  // if(error) {
+  //   console.log(`ERROR: ${error}`)
+  //   return <Text>ERROR</Text>
+  // }
 
   
-  console.log(typeof data)
-  console.log(JSON.stringify(data.data?.results, null, 2))
-  console.log()
+  // console.log(typeof data)
+  // console.log(JSON.stringify(data.data?.results, null, 2))
+  // console.log()
 
 
   return (

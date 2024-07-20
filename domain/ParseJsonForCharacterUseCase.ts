@@ -1,4 +1,4 @@
-import { ParsedCharacter } from "./ParsedCharacter";
+import { ParsedCharacter } from "../data/ParsedCharacter";
 
 
 export function useParseJsonForCharacterUseCase(rawCharacter: any): ParsedCharacter {

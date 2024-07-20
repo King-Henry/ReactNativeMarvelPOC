@@ -9,8 +9,10 @@ export class MarvelCharacter extends Realm.Object<MarvelCharacter> {
     comicsCount!: number;
     characterLink!: string
 
+    static realmName = "MarvelCharacter"
+
     static schema: ObjectSchema = {
-        name: 'MarvelCharacter',
+        name: this.realmName,
         properties: {
             _id: 'int',
             name: 'string',

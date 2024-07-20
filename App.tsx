@@ -105,8 +105,9 @@ function MainContent(): React.JSX.Element {
   }
 
   
- console.log(typeof data)
- console.log(JSON.stringify(data.data?.results, null, 2))
+  console.log(typeof data)
+  console.log(JSON.stringify(data.data?.results, null, 2))
+  console.log()
 
 
   return (

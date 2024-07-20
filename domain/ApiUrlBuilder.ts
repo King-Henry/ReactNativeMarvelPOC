@@ -7,7 +7,7 @@ const PRIVATE_KEY = "b731efcb4a8383c43f42b023505e305cee65c382"
 const PUBLIC_KEY = "e2419bfb679902f52b4d1d2bd98806ad"
 
 
-function buildUrl(): URL {
+export function buildUrl(): URL {
     let timeStamp = Date.now().toString();
     let url = new URL(CHARACTERS_ENDPOINT, BASE_API);
     let queryParams = {
@@ -30,5 +30,3 @@ function buildHash(timeStamp: string): string {
         .appendStr(PUBLIC_KEY)
     return md5.end(false) as string
 }
-
-export { buildUrl }

@@ -4,7 +4,7 @@ import { ObjectSchema } from "realm/dist/public-types/schema";
 export class MarvelCharacter extends Realm.Object<MarvelCharacter> {
     _id!: number;
     name!: string;
-    description?: string;
+    description?: string | null;
     thumbnailUrl!: string;
     comicsCount!: number;
     characterLink!: string

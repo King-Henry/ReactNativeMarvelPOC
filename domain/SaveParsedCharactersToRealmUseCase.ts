@@ -1,14 +1,15 @@
-import { useObject, useRealm } from "@realm/react";
+import { Realm, useObject } from "@realm/react";
 import { MarvelCharacter } from "../data/MarvelCharacter";
 import { ParsedCharacter } from "../data/ParsedCharacter";
 
-export function useSaveParsedCharactersToRealmUseCase(remoteCharacters: ParsedCharacter[]): boolean {
-    const realm = useRealm();
+export function saveParsedCharactersToRealmUseCase(remoteCharacters: ParsedCharacter[], realm: Realm): boolean {
     try {
         remoteCharacters.forEach((remoteCharacter) => {
-            const existingObject = useObject(MarvelCharacter, remoteCharacter.id);
+            const existingObject = realm.objectForPrimaryKey(MarvelCharacter, remoteCharacter.id);
+            console.log(`ExistingObject - ${!existingObject}`)
             if(!existingObject) {
                 realm.write(() => {
+                    console.log(`Writing character ${remoteCharacter.id} to db`)
                     realm.create<MarvelCharacter>(MarvelCharacter.realmName, 
                         {
                             _id: remoteCharacter.id,
@@ -24,6 +25,7 @@ export function useSaveParsedCharactersToRealmUseCase(remoteCharacters: ParsedCh
         })
         return true
     } catch(error) {
+        console.log(`saveParsedCharactersToRealmUseCase() error -- ` + error)
         return false
     }
 }

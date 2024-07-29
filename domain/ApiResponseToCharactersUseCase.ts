@@ -1,8 +1,8 @@
 import { ParsedCharacter } from "../data/ParsedCharacter";
-import { useParseJsonForCharacterUseCase } from "./ParseJsonForCharacterUseCase";
+import { parseJsonForCharacterUseCase } from "./ParseJsonForCharacterUseCase";
 
 
-export function useApiResponseToCharactersUseCase(data: any): ParsedCharacter[] {
+export function transformApiResponseToCharactersUseCase(data: any): ParsedCharacter[] {
     const results = data.data?.results
     if(!results) {
         return []
@@ -10,9 +10,10 @@ export function useApiResponseToCharactersUseCase(data: any): ParsedCharacter[] 
 
     const characters: ParsedCharacter[] = []
     for(let result of results) {
-        let parsedCharacter = useParseJsonForCharacterUseCase(result)
+        let parsedCharacter = parseJsonForCharacterUseCase(result)
         characters.push(parsedCharacter)
     }
 
-    return results
+    console.log("Api response has been transformed!");
+    return characters
 }

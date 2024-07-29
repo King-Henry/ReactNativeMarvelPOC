@@ -7,9 +7,12 @@ import { queryResultsToCharacterListItemsUseCase } from "./QueryResultsToCharact
 
 export function useSubscribeToCharacterListUiItems() {
     const [items, setItems] = React.useState<CharacterListUiItem[]>([])
+    const [error, setError] = React.useState<Error | null>(null)
+    const [isLoading, setIsLoading] = React.useState<boolean>(false)
     const queryResultsRef = useRef<Results<MarvelCharacter> | null>(null) // we need to keep around the query results. Should this happen here?
     
     useEffect(() => {
+        setIsLoading(true)
         const realm = useRealm()
         const query: Results<MarvelCharacter> = realm.objects(MarvelCharacter.realmName)
         // Hold on to query results for paging in the future
@@ -17,7 +20,9 @@ export function useSubscribeToCharacterListUiItems() {
         // Build initial list
         const listItems: CharacterListUiItem[] = queryResultsToCharacterListItemsUseCase(queryResultsRef.current)
         // Set list on useState
+        setIsLoading(false)
         setItems(listItems)
+        
 
         const queryChangeListener = () => {
             queryResultsRef.current = query // query gets updated in real time so this should have the latest results 
@@ -46,5 +51,5 @@ export function useSubscribeToCharacterListUiItems() {
 
     // return lambda to access next page (future)
     // Return items
-    return { items, getNextPage, getPreviousPage }
+    return { items, error,  isLoading, getNextPage, getPreviousPage }
 }

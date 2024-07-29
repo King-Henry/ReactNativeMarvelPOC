@@ -14,11 +14,11 @@ export function buildUrl(limit: number, offset: number): URL {
         apikey: PUBLIC_KEY,
         ts: timeStamp,
         hash: buildHash(timeStamp),
-        limit: "1"
+        limit: "50"
     }
     let params = new URLSearchParams(queryParams)
     url.search = params.toString()
-    console.log(url.toString())
+    console.log(`Our endpoint: ` + url.toString())
     return url
 }
 

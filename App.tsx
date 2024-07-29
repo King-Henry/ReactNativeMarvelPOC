@@ -37,8 +37,9 @@ import {
 import { RealmProvider } from '@realm/react'
 import { MarvelCharacter } from './data/MarvelCharacter'
 import { styles } from './styles';
-import { useApiResponseToCharactersUseCase } from './domain/ApiResponseToCharactersUseCase';
-import { useGetParsedCharactersForPage } from './domain/GetParsedCharactersForPage';
+import { transformApiResponseToCharactersUseCase } from './domain/ApiResponseToCharactersUseCase';
+import { getParsedCharactersForPage } from './domain/GetParsedCharactersForPage';
+import { useSubscribeToCharacterListUiItems } from './domain/SubscribeToCharacterListUiItems';
 
 
 type SectionProps = PropsWithChildren<{
@@ -76,7 +77,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
-      <RealmProvider schema={[MarvelCharacter.schema]}>
+      <RealmProvider schema={[MarvelCharacter]}>
         <MainContent/>
       </RealmProvider>
     </QueryClientProvider>
@@ -91,9 +92,13 @@ function MainContent(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const success = useGetParsedCharactersForPage(1)
+  // Fetch characters from API and store in DB
+  const success = getParsedCharactersForPage(1)
 
-  // if(isPending) {
+  // // Subscribe to Realm updates to receive fetched characters
+  // const { items, error,  isLoading, getNextPage, getPreviousPage } = useSubscribeToCharacterListUiItems()
+
+  // if(isLoading) {
   //   return <Text>Loading..</Text>
   // }
 
@@ -101,11 +106,6 @@ function MainContent(): React.JSX.Element {
   //   console.log(`ERROR: ${error}`)
   //   return <Text>ERROR</Text>
   // }
-
-  
-  // console.log(typeof data)
-  // console.log(JSON.stringify(data.data?.results, null, 2))
-  // console.log()
 
 
   return (

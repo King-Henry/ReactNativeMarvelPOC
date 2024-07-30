@@ -8,6 +8,8 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  FlatList,
+  ListRenderItem,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -40,6 +42,8 @@ import { styles } from './styles';
 import { transformApiResponseToCharactersUseCase } from './domain/ApiResponseToCharactersUseCase';
 import { getParsedCharactersForPage } from './domain/GetParsedCharactersForPage';
 import { useSubscribeToCharacterListUiItems } from './domain/SubscribeToCharacterListUiItems';
+import { CharacterListUiItem } from './ui/CharacterListUiItem';
+import { CharacterRow } from './ui/CharacterRow';
 
 
 type SectionProps = PropsWithChildren<{
@@ -86,27 +90,47 @@ function App(): React.JSX.Element {
 }
 
 function MainContent(): React.JSX.Element {
+  
+  // Fetch characters from API and store in DB
+  const success = getParsedCharactersForPage(1)
+
+  // // Subscribe to Realm updates to receive fetched characters
+  const { items, error,  isLoading, getNextPage, getPreviousPage } = useSubscribeToCharacterListUiItems()
+
+  if(isLoading) {
+    return <Text>Loading..</Text>
+  }
+
+  if(error) {
+    console.log(`ERROR: ${error}`)
+    return <Text>ERROR</Text>
+  }
+
+  return (
+    <View>
+      <FlatList
+        data={items}
+        renderItem={({item}) => listItemToUiRow(item)}/>
+    </View>
+  )
+
+}
+
+const onRowClick = (id: number): void => {
+  console.log("Just clicked on " + id)
+}
+
+const listItemToUiRow = (item: CharacterListUiItem): React.JSX.Element => {
+  return <CharacterRow uiModel={item} clickListener={onRowClick}>{item.id}</CharacterRow>
+}
+
+
+function defaultView(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-  // Fetch characters from API and store in DB
-  const success = getParsedCharactersForPage(1)
-
-  // // Subscribe to Realm updates to receive fetched characters
-  // const { items, error,  isLoading, getNextPage, getPreviousPage } = useSubscribeToCharacterListUiItems()
-
-  // if(isLoading) {
-  //   return <Text>Loading..</Text>
-  // }
-
-  // if(error) {
-  //   console.log(`ERROR: ${error}`)
-  //   return <Text>ERROR</Text>
-  // }
-
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -140,7 +164,6 @@ function MainContent(): React.JSX.Element {
     </SafeAreaView>
   );
 }
-
 
 
 export default App;

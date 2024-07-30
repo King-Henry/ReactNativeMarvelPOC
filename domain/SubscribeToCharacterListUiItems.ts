@@ -10,23 +10,23 @@ export function useSubscribeToCharacterListUiItems() {
     const [error, setError] = React.useState<Error | null>(null)
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
     const queryResultsRef = useRef<Results<MarvelCharacter> | null>(null) // we need to keep around the query results. Should this happen here?
+    const realm = useRealm()
     
     useEffect(() => {
         setIsLoading(true)
-        const realm = useRealm()
         const query: Results<MarvelCharacter> = realm.objects(MarvelCharacter.realmName)
         // Hold on to query results for paging in the future
         queryResultsRef.current = query
-        // Build initial list
-        const listItems: CharacterListUiItem[] = queryResultsToCharacterListItemsUseCase(queryResultsRef.current)
         // Set list on useState
         setIsLoading(false)
-        setItems(listItems)
         
 
         const queryChangeListener = () => {
+            console.log("We have RESULTTTTTS " + query.length)
             queryResultsRef.current = query // query gets updated in real time so this should have the latest results 
             //rebuild list
+            const listItems: CharacterListUiItem[] = queryResultsToCharacterListItemsUseCase(queryResultsRef.current)
+            setItems(listItems)
         }
         
         // Add listener
@@ -39,7 +39,7 @@ export function useSubscribeToCharacterListUiItems() {
         return () => {
             query.removeListener(queryChangeListener)
         }
-    })
+    }, [])
 
     const getNextPage = () => {
 
@@ -51,5 +51,7 @@ export function useSubscribeToCharacterListUiItems() {
 
     // return lambda to access next page (future)
     // Return items
+    console.log("Items count -- " + items.length)
+    console.log("Item 1 - " + JSON.stringify(items[0]))
     return { items, error,  isLoading, getNextPage, getPreviousPage }
 }

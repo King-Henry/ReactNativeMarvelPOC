@@ -21,21 +21,23 @@ export const styles = StyleSheet.create({
 
   export const rowStyles = StyleSheet.create({
       rowContainer: {
-        height: 50,
+        height: 64,
         paddingHorizontal: 16,
-        paddingVertical: 8,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
       },
       rowCircularImage: {
-        width: 50,
-        height: 50,
+        width: 48,
+        height: 48,
         borderRadius: 25
       },
       rowHeading: {
-        fontSize: 22,
-        fontWeight: 400
+        fontSize: 18,
+        fontWeight: '600',
+        marginStart: 16
       },
       rowSubHeading: {
-        fontSize: 12
+        fontSize: 12,
+        marginStart: 16
       }
   })

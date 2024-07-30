@@ -1,22 +1,28 @@
 import React, { PropsWithChildren } from "react";
 import { rowStyles } from "../styles";
 import { CharacterListUiItem } from "./CharacterListUiItem";
-import { View, Text, Image, Platform, TouchableNativeFeedback, TouchableHighlight } from "react-native/types";
+import { View, Text, Image, Platform, TouchableNativeFeedback, TouchableHighlight } from "react-native";
 
 type ContainerProps = PropsWithChildren<{
     id: number,
-    style: any,
-    clickAction: (id: number) => {}
+    clickAction: (id: number) => void
 }>
 
-export function CharacterRow(uiModel: CharacterListUiItem, clickListener: (id: number) => {}) {
+export type  CharacterRowProps = PropsWithChildren<{
+    uiModel: CharacterListUiItem,
+    clickListener: (id: number) => void
+}>
+
+export function CharacterRow(props: CharacterRowProps): React.JSX.Element {
     return (
-        <ContainerElement style={rowStyles.rowContainer} clickAction={clickListener} id={uiModel.id}>
-            <Image source={{uri: 'uiModel.thumbnailUrl'}} style={rowStyles.rowCircularImage} />
-            <View>
-                <Text style={rowStyles.rowHeading}>{uiModel.name}</Text>
-                <Text style={rowStyles.rowSubHeading}>{uiModel.id}</Text>
-            </View>
+        <ContainerElement clickAction={props.clickListener} id={props.uiModel.id}>
+             <View style={rowStyles.rowContainer}>
+                 <Image source={{uri: props.uiModel.thumbnailUrl}} style={rowStyles.rowCircularImage} />
+                 <View>
+                    <Text style={rowStyles.rowHeading}>{props.uiModel.name}</Text>
+                    <Text style={rowStyles.rowSubHeading}>{props.uiModel.id}</Text>
+                 </View>
+            </View> 
         </ContainerElement>
     )
 }

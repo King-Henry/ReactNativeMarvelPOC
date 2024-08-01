@@ -9,11 +9,9 @@ import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   FlatList,
-  ListRenderItem,
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
   Text,
   useColorScheme,
   View,
@@ -26,12 +24,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { buildUrl } from './domain/ApiUrlBuilder';
 
 import {
-  useQuery,
-  useMutation,
-  useQueryClient,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
@@ -39,11 +33,10 @@ import {
 import { RealmProvider } from '@realm/react'
 import { MarvelCharacter } from './data/MarvelCharacter'
 import { styles } from './styles';
-import { transformApiResponseToCharactersUseCase } from './domain/ApiResponseToCharactersUseCase';
 import { getParsedCharactersForPage } from './domain/GetParsedCharactersForPage';
 import { useSubscribeToCharacterListUiItems } from './domain/SubscribeToCharacterListUiItems';
 import { CharacterListUiItem } from './ui/CharacterListUiItem';
-import { CharacterRow } from './ui/CharacterRow';
+import CharacterRow  from './ui/CharacterRow';
 
 
 type SectionProps = PropsWithChildren<{

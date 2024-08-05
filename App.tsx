@@ -31,9 +31,9 @@ import {
 } from '@tanstack/react-query'
 
 import { RealmProvider } from '@realm/react'
-import { MarvelCharacter } from './data/MarvelCharacter'
-import { styles } from './styles';
-import { getParsedCharactersForPage } from './domain/GetParsedCharactersForPage';
+import { AnimeCharacter } from './data/AnimeCharacter'
+import { listStyle, styles } from './styles';
+import { getParsedCharacters } from './domain/GetParsedCharactersForPage';
 import { useSubscribeToCharacterListUiItems } from './domain/SubscribeToCharacterListUiItems';
 import { CharacterListUiItem } from './ui/CharacterListUiItem';
 import CharacterRow  from './ui/CharacterRow';
@@ -74,7 +74,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
-      <RealmProvider schema={[MarvelCharacter]}>
+      <RealmProvider schema={[AnimeCharacter]}>
         <MainContent/>
       </RealmProvider>
     </QueryClientProvider>
@@ -83,9 +83,10 @@ function App(): React.JSX.Element {
 }
 
 function MainContent(): React.JSX.Element {
+  console.log("RENDERING MAIN CONTENT")
   
   // Fetch characters from API and store in DB
-  // const success = getParsedCharactersForPage(1)
+  // const success = getParsedCharacters()
 
   // // Subscribe to Realm updates to receive fetched characters
   const { items, error,  isLoading, getNextPage, getPreviousPage } = useSubscribeToCharacterListUiItems()
@@ -99,14 +100,21 @@ function MainContent(): React.JSX.Element {
     return <Text>ERROR</Text>
   }
 
+  const onEndReached = () => {
+    console.log("TIMMEH - we've reached the end!")
+    getNextPage()
+  }
+
   return (
-    <View>
+    <SafeAreaView style={listStyle.listContainer}>
       <FlatList
         data={items}
-        renderItem={({item}) => listItemToUiRow(item)}/>
-    </View>
+        onEndReached={onEndReached}
+        onEndReachedThreshold={8}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({item}) => listItemToUiRow(item)} />
+    </SafeAreaView>
   )
-
 }
 
 const onRowClick = (id: number): void => {

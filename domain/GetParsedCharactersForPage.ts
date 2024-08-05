@@ -1,11 +1,12 @@
 import { useRealm } from "@realm/react";
 import { useEffect, useState } from "react";
-import { getCharacters } from "../data/MarvelApiService";
+import { getCharacters } from "../data/ApiService";
 import { ParsedCharacter } from "../data/ParsedCharacter";
 import { transformApiResponseToCharactersUseCase } from "./ApiResponseToCharactersUseCase";
+import { prefetchCharacterImagesUseCase } from "./PrefetchCharacterImagesUseCase";
 import { saveParsedCharactersToRealmUseCase } from "./SaveParsedCharactersToRealmUseCase";
 
-export function getParsedCharactersForPage(page: number): boolean {
+export function getParsedCharacters(): boolean {
     const [success, setSuccess] = useState(true)
     const realm = useRealm()
     useEffect(() => {
@@ -13,6 +14,7 @@ export function getParsedCharactersForPage(page: number): boolean {
             try {
                 const json: any = await getCharacters(20, 0)
                 const parsedCharacters: ParsedCharacter[] = transformApiResponseToCharactersUseCase(json)
+                // await prefetchCharacterImagesUseCase(parsedCharacters)
                 const success = saveParsedCharactersToRealmUseCase(parsedCharacters, realm)
                 setSuccess(success)
             } catch(error) {
@@ -24,6 +26,6 @@ export function getParsedCharactersForPage(page: number): boolean {
         fetchAndSaveToRealm()
     }, [])
     
-    console.log(`Was successful?? - ${success}`)
+    // console.log(`Was successful?? - ${success}`)
     return success
 }

@@ -3,7 +3,8 @@ import { parseJsonForCharacterUseCase } from "./ParseJsonForCharacterUseCase";
 
 
 export function transformApiResponseToCharactersUseCase(data: any): ParsedCharacter[] {
-    const results = data.data?.results
+    const results = data.characters
+    // console.log(JSON.stringify(results))
     if(!results) {
         return []
     }

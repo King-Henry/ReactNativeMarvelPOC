@@ -40,4 +40,10 @@ export const styles = StyleSheet.create({
         fontSize: 12,
         marginStart: 16
       }
+  });
+
+  export const listStyle = StyleSheet.create({
+    listContainer: {
+      flex: 1
+    }
   })

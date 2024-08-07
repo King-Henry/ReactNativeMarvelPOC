@@ -10,10 +10,11 @@ export function queryResultsToCharacterListItemsUseCase(
     ): CharacterListUiItem[] {
     // console.log("ENDING ITEM: " + endingItem)
     // benchmarkFirstItemFetch(results)
+    const sortedResults = results.sorted('name')
     const toReturn = []
     const actualEndingItem = endingItem > results.length ? results.length : endingItem
     for(let i = startingItem; i <= actualEndingItem; i++) {
-        const model = results[i]
+        const model = sortedResults[i]
         if(model === undefined) {
             continue;
         }

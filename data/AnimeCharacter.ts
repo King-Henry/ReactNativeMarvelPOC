@@ -4,7 +4,8 @@ import { ObjectSchema } from "realm/dist/public-types/schema";
 export class AnimeCharacter extends Realm.Object<AnimeCharacter> {
     _id!: number;
     name!: string;
-    image!: string | null;
+    fullImage!: string | null;
+    thumbnailImage!: string
 
     static realmName = "AnimeCharacter"
 
@@ -13,7 +14,8 @@ export class AnimeCharacter extends Realm.Object<AnimeCharacter> {
         properties: {
             _id: 'int',
             name: 'string',
-            image: 'string?'
+            fullImage: 'string?',
+            thumbnailImage: 'string'
         },
         primaryKey: '_id',
     }

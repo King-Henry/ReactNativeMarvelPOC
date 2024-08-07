@@ -14,7 +14,8 @@ export function saveParsedCharactersToRealmUseCase(remoteCharacters: ParsedChara
                         {
                             _id: remoteCharacter.id,
                             name: remoteCharacter.name,
-                            image: remoteCharacter.image,
+                            fullImage: remoteCharacter.fullImage,
+                            thumbnailImage: remoteCharacter.thumbnailImage
                         }
                     )
                 })

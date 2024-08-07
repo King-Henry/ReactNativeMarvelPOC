@@ -25,7 +25,7 @@ function CharacterRow(props: CharacterRowProps): React.JSX.Element {
                  <Image 
                     source={{uri: props.uiModel.thumbnailUrl}} 
                     recyclingKey={props.uiModel.id.toString()}
-                    cachePolicy={'memory-disk'}
+                    cachePolicy={'disk'}
                     style={rowStyles.rowCircularImage} 
                     onError={(event: ImageErrorEventData)=> console.log("ERROR LOADING - " + props.uiModel.id + " - " + props.uiModel.thumbnailUrl + " - " + event.error)} />
                  <View style={{flex:1}}>

@@ -1,5 +1,6 @@
 export interface ParsedCharacter {
     id: number;
     name: string;
-    image: string | null;
+    fullImage: string | null;
+    thumbnailImage: string;
 }

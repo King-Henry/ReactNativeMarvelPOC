@@ -22,12 +22,12 @@ function CharacterRow(props: CharacterRowProps): React.JSX.Element {
     return (
         <ContainerElement clickAction={props.clickListener} id={props.uiModel.id}>
              <View style={rowStyles.rowContainer}>
-                 {/* <Image 
+                 <Image 
                     source={{uri: props.uiModel.thumbnailUrl}} 
                     recyclingKey={props.uiModel.id.toString()}
                     cachePolicy={'memory-disk'}
                     style={rowStyles.rowCircularImage} 
-                    onError={(event: ImageErrorEventData)=> console.log("ERROR LOADING - " + props.uiModel.id + " - " + props.uiModel.thumbnailUrl + " - " + event.error)} /> */}
+                    onError={(event: ImageErrorEventData)=> console.log("ERROR LOADING - " + props.uiModel.id + " - " + props.uiModel.thumbnailUrl + " - " + event.error)} />
                  <View style={{flex:1}}>
                     <Text style={rowStyles.rowHeading} numberOfLines={1} ellipsizeMode={"tail"}>{props.uiModel.name}</Text>
                     <Text style={rowStyles.rowSubHeading}>{props.uiModel.id}</Text>

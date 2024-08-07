@@ -8,7 +8,7 @@ const CHARACTERS_ENDPOINT = "/api/character"
 
 
 export function buildUrl(limit: number, offset: number): URL {
-    let timeStamp = Date.now().toString();
+    // let timeStamp = Date.now().toString();
     let url = new URL(CHARACTERS_ENDPOINT, BASE_API);
     let queryParams = {
         page: "1",

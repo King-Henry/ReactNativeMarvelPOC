@@ -86,7 +86,7 @@ function MainContent(): React.JSX.Element {
   console.log("RENDERING MAIN CONTENT")
   
   // Fetch characters from API and store in DB
-  // const success = getParsedCharacters()
+  const success = getParsedCharacters()
 
   // // Subscribe to Realm updates to receive fetched characters
   const { items, error,  isLoading, getNextPage, getPreviousPage } = useSubscribeToCharacterListUiItems()

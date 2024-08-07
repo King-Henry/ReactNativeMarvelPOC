@@ -8,8 +8,8 @@ export function queryResultsToCharacterListItemsUseCase(
         startingItem: number = 0, 
         endingItem: number = results.length - 1// actual index
     ): CharacterListUiItem[] {
-    console.log("ENDING ITEM: " + endingItem)
-    benchmarkFirstItemFetch(results)
+    // console.log("ENDING ITEM: " + endingItem)
+    // benchmarkFirstItemFetch(results)
     const toReturn = []
     const actualEndingItem = endingItem > results.length ? results.length : endingItem
     for(let i = startingItem; i <= actualEndingItem; i++) {

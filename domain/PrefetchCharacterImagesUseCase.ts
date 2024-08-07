@@ -4,7 +4,7 @@ import { Image } from "expo-image";
 
 
 export function prefetchCharacterImagesUseCase(parsedCharacters: ParsedCharacter[]): Promise<boolean|void> {
-    const urls: string[] = parsedCharacters.map<string>(parsedCharacter => parsedCharacter.image)
+    const urls: string[] = parsedCharacters.map<string>(parsedCharacter => parsedCharacter.image!)
                                 .filter((url) => url !== null && url.trim())
     return Image.prefetch(urls)
         .then((success) => {

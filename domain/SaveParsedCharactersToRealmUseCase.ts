@@ -1,23 +1,19 @@
 import { Realm, useObject } from "@realm/react";
 import { AnimeCharacter } from "../data/AnimeCharacter";
 import { ParsedCharacter } from "../data/ParsedCharacter";
+import { Repository } from "./CharacterRepository";
 
-export function saveParsedCharactersToRealmUseCase(remoteCharacters: ParsedCharacter[], realm: Realm): boolean {
+export function saveParsedCharactersToRealmUseCase(remoteCharacters: ParsedCharacter[], repository: Repository<AnimeCharacter>): boolean {
     try {
         remoteCharacters.forEach((remoteCharacter) => {
-            const existingObject = realm.objectForPrimaryKey(AnimeCharacter, remoteCharacter.id);
+            const existingObject = repository.get(remoteCharacter.id);
             // console.log(`ExistingObject - ${!existingObject}`)
             if(!existingObject) {
-                realm.write(() => {
-                    // console.log(`Writing character ${remoteCharacter.id} to db`)
-                    realm.create<AnimeCharacter>(AnimeCharacter.realmName, 
-                        {
-                            _id: remoteCharacter.id,
-                            name: remoteCharacter.name,
-                            fullImage: remoteCharacter.fullImage,
-                            thumbnailImage: remoteCharacter.thumbnailImage
-                        }
-                    )
+                repository.create({
+                    _id: remoteCharacter.id,
+                    name: remoteCharacter.name,
+                    fullImage: remoteCharacter.fullImage,
+                    thumbnailImage: remoteCharacter.thumbnailImage
                 })
             }
         })

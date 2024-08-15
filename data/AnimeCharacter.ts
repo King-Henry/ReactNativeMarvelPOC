@@ -1,11 +1,16 @@
-import { Realm } from "realm"
 import { ObjectSchema } from "realm/dist/public-types/schema";
+import Realm from "realm";
+import { LocalModel } from "./LocalModel";
 
-export class AnimeCharacter extends Realm.Object<AnimeCharacter> {
+export class AnimeCharacter extends LocalModel<AnimeCharacter> {
     _id!: number;
     name!: string;
     fullImage!: string | null;
     thumbnailImage!: string
+
+    getType(): string {
+        return AnimeCharacter.realmName
+    }
 
     static realmName = "AnimeCharacter"
 

@@ -33,7 +33,7 @@ import {
 import { RealmProvider } from '@realm/react'
 import { AnimeCharacter } from './data/AnimeCharacter'
 import { listStyle, styles } from './styles';
-import { getParsedCharacters } from './domain/GetParsedCharactersForPage';
+import { useGetParsedCharacters } from './domain/GetParsedCharactersForPage';
 import { useSubscribeToCharacterListUiItems } from './domain/SubscribeToCharacterListUiItems';
 import { CharacterListUiItem } from './ui/CharacterListUiItem';
 import CharacterRow  from './ui/CharacterRow';
@@ -86,7 +86,7 @@ function MainContent(): React.JSX.Element {
   console.log("RENDERING MAIN CONTENT")
   
   // Fetch characters from API and store in DB
-  const success = getParsedCharacters()
+  const success = useGetParsedCharacters()
 
   // // Subscribe to Realm updates to receive fetched characters
   const { items, error,  isLoading, getNextPage, getPreviousPage } = useSubscribeToCharacterListUiItems()

@@ -10,13 +10,19 @@ const PAGE_SIZE = 100;
 export function useSubscribeToCharacterListUiItems() {
     const [items, setItems] = React.useState<CharacterListUiItem[]>([])
     const [error, setError] = React.useState<Error | null>(null)
-    const [isLoading, setIsLoading] = React.useState<boolean>(false)
+    const [isLoading, setIsLoading] = React.useState<boolean>(true)
     const queryResultsRef = useRef<Results<AnimeCharacter> | null>(null) // we need to keep around the query results. Should this happen here?
     const page = useRef<number>(1)
     const charactersRepository = useAnimeCharacterRepository()
+    const [shouldBuildList, setShouldBuildList] = React.useState<boolean>(false)
     
     
     useEffect(() => {
+        if(!shouldBuildList) {
+            return;
+        }
+        console.log('STARTING BUILDING ITEMS')
+
         // setIsLoading(true)
         const query: Results<AnimeCharacter> = charactersRepository.getAll()
         // Hold on to query results for paging in the future
@@ -32,6 +38,7 @@ export function useSubscribeToCharacterListUiItems() {
                 0, items.length, PAGE_SIZE, page.current)
             // console.log("queryChangeListener() - SENDING NEW ITEMS")
             setItems(listItems)
+            setIsLoading(false)
         }
         
         // Add listener
@@ -44,7 +51,7 @@ export function useSubscribeToCharacterListUiItems() {
         return () => {
             query.removeListener(queryChangeListener)
         }
-    }, [])
+    }, [shouldBuildList])
 
     const getNextPage = () => {
         const results = queryResultsRef.current
@@ -59,11 +66,14 @@ export function useSubscribeToCharacterListUiItems() {
     }
 
     const getPreviousPage = () => {
+    }
 
+    const setReadyToBuild = () => {
+        setShouldBuildList(true)
     }
 
     // return lambda to access next page (future)
     // Return items
     // console.log("Items count -- " + items.length)
-    return { items, error,  isLoading, getNextPage, getPreviousPage }
+    return { items, error,  isLoading, getNextPage, getPreviousPage, setReadyToBuild }
 }

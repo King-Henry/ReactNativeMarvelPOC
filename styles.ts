@@ -47,3 +47,10 @@ export const styles = StyleSheet.create({
       flex: 1
     }
   })
+
+  export const loaderStyles = StyleSheet.create({
+    centeredLoader: {
+      flex: 1,
+      justifyContent: 'center',
+    }
+  })

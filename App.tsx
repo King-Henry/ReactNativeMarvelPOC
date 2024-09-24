@@ -8,6 +8,7 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   SafeAreaView,
   ScrollView,
@@ -30,13 +31,14 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 
-import { RealmProvider } from '@realm/react'
+import { RealmProvider, useUser } from '@realm/react'
 import { AnimeCharacter } from './data/AnimeCharacter'
-import { listStyle, styles } from './styles';
+import { listStyle, loaderStyles, styles } from './styles';
 import { useGetParsedCharacters } from './domain/GetParsedCharactersForPage';
 import { useSubscribeToCharacterListUiItems } from './domain/SubscribeToCharacterListUiItems';
 import { CharacterListUiItem } from './ui/CharacterListUiItem';
 import CharacterRow  from './ui/CharacterRow';
+import { useMainViewModel } from './domain/MainViewModel';
 
 
 type SectionProps = PropsWithChildren<{
@@ -84,15 +86,18 @@ function App(): React.JSX.Element {
 
 function MainContent(): React.JSX.Element {
   console.log("RENDERING MAIN CONTENT")
-  
-  // Fetch characters from API and store in DB
-  const success = useGetParsedCharacters()
+
 
   // // Subscribe to Realm updates to receive fetched characters
-  const { items, error,  isLoading, getNextPage, getPreviousPage } = useSubscribeToCharacterListUiItems()
+  const { items, error,  allLoadingComplete, getNextPage, getPreviousPage } = useMainViewModel()
+  // console.log(`LOADING?? - ${allLoadingComplete}`)
 
-  if(isLoading) {
-    return <Text>Loading..</Text>
+  if(!allLoadingComplete) {
+    return (
+      <View style={loaderStyles.centeredLoader}>
+        <ActivityIndicator size="large"/>
+      </View> 
+    )
   }
 
   if(error) {

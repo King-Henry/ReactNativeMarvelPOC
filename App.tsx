@@ -90,7 +90,7 @@ function MainContent(): React.JSX.Element {
 
   // // Subscribe to Realm updates to receive fetched characters
   const { items, error,  allLoadingComplete, getNextPage, getPreviousPage } = useMainViewModel()
-  // console.log(`LOADING?? - ${allLoadingComplete}`)
+  console.log(`LOADING?? - ${allLoadingComplete}`)
 
   if(!allLoadingComplete) {
     return (

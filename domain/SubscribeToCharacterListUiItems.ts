@@ -7,14 +7,13 @@ import { getListItemsUseCase } from "./GetListItemsUseCase";
 
 const PAGE_SIZE = 100;
 
-export function useSubscribeToCharacterListUiItems() {
+export function useSubscribeToCharacterListUiItems(shouldBuildList: boolean) {
     const [items, setItems] = React.useState<CharacterListUiItem[]>([])
     const [error, setError] = React.useState<Error | null>(null)
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
     const queryResultsRef = useRef<Results<AnimeCharacter> | null>(null) // we need to keep around the query results. Should this happen here?
     const page = useRef<number>(1)
     const charactersRepository = useAnimeCharacterRepository()
-    const [shouldBuildList, setShouldBuildList] = React.useState<boolean>(false)
     
     
     useEffect(() => {
@@ -66,14 +65,11 @@ export function useSubscribeToCharacterListUiItems() {
     }
 
     const getPreviousPage = () => {
-    }
 
-    const setReadyToBuild = () => {
-        setShouldBuildList(true)
     }
 
     // return lambda to access next page (future)
     // Return items
     // console.log("Items count -- " + items.length)
-    return { items, error,  isLoading, getNextPage, getPreviousPage, setReadyToBuild }
+    return { items, error,  isLoading, getNextPage, getPreviousPage }
 }

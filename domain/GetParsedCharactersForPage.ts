@@ -6,27 +6,31 @@ import { useAnimeCharacterRepository } from "./CharacterRepository";
 import { saveParsedCharactersToRealmUseCase } from "./SaveParsedCharactersToRealmUseCase";
 
 export function useGetParsedCharacters()  {
-    const [success, setSuccess] = useState(true)
-    const [finished, setFinished] = useState(false)
+    const [result, setResult] = useState(GetParsedCharactersResult.Pending)
     const repository = useAnimeCharacterRepository()
     useEffect(() => {
         const fetchAndSaveToRealm = async () => {
             try {
                 const json: any = await getCharacters(20, 0)
-                const parsedCharacters: ParsedCharacter[] = transformApiResponseToCharactersUseCase(json)
+                // const parsedCharacters: ParsedCharacter[] = transformApiResponseToCharactersUseCase(json)
                 // await prefetchCharacterImagesUseCase(parsedCharacters)
-                const success = saveParsedCharactersToRealmUseCase(parsedCharacters, repository)
-                setSuccess(success)
+                // const success = saveParsedCharactersToRealmUseCase(parsedCharacters, repository)
+                setResult(GetParsedCharactersResult.Success)
             } catch(error) {
                 console.log(`GetParsedCharactersForPage() error -- ` + error)
-                setSuccess(false)
+                setResult(GetParsedCharactersResult.Failure)
             }
-            setFinished(true)
         }
 
         fetchAndSaveToRealm()
     }, [])
     
     // console.log(`Was successful?? - ${success}`)
-    return { success, finished }
+    return { result }
+}
+
+export enum GetParsedCharactersResult {
+    Success,
+    Failure,
+    Pending
 }

@@ -5,11 +5,11 @@ import {
   View,
   Text,
 } from 'react-native';
-import {useMainViewModel} from './domain/MainViewModel';
+import {useMainViewModel} from './MainViewModel';
 import React from 'react';
-import {listStyle, loaderStyles} from './styles';
-import {CharacterListUiItem} from './ui/CharacterListUiItem';
-import CharacterRow from './ui/CharacterRow';
+import {listStyle, loaderStyles} from '../styles';
+import {CharacterListUiItem} from './CharacterListUiItem';
+import CharacterRow from './CharacterRow';
 
 export function MainContent(): React.JSX.Element {
   console.log('RENDERING MAIN CONTENT');

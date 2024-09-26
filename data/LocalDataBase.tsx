@@ -1,10 +1,10 @@
 import {useRealm} from '@realm/react';
 import React, {useEffect} from 'react';
 import Realm, {Results, UpdateMode} from 'realm';
-import {ParsedCharacter} from '../data/ParsedCharacter';
-import {getCharacters} from '../data/ApiService';
-import {saveParsedCharactersToRealmUseCase} from './SaveParsedCharactersToRealmUseCase';
-import {AnimeCharacter} from '../data/AnimeCharacter';
+import {ParsedCharacter} from './ParsedCharacter';
+import {getCharacters} from './ApiService';
+import {saveParsedCharactersToRealmUseCase} from '../domain/SaveParsedCharactersToRealmUseCase';
+import {AnimeCharacter} from './AnimeCharacter';
 
 export const useLocalDataBase = () => {
   const realm = useRealm();

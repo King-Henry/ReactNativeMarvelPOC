@@ -4,8 +4,8 @@ import React, {useEffect} from 'react';
 import {
   GetParsedCharactersResult,
   useGetParsedCharacters,
-} from './GetParsedCharactersForPage';
-import {useGetCharactersByPageUseCase} from './SubscribeToCharacterListUiItems';
+} from '../domain/GetParsedCharactersForPage';
+import {useGetCharactersByPageUseCase} from '../domain/SubscribeToCharacterListUiItems';
 
 interface MainVieModel {}
 

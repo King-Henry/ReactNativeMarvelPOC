@@ -11,8 +11,8 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import {RealmProvider} from '@realm/react';
 import {AnimeCharacter} from './data/AnimeCharacter';
-import {MainContent} from './MainContent';
-import {LocalDataBaseProvider} from './domain/LocalDataStore';
+import {MainContent} from './ui/MainContent';
+import {LocalDataBaseProvider} from './data/LocalDataBase';
 
 const queryClient: QueryClient = new QueryClient();
 

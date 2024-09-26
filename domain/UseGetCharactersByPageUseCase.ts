@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {Results} from 'realm';
 import {AnimeCharacter} from '../data/AnimeCharacter';
 import {CharacterListUiItem} from '../ui/CharacterListUiItem';
-import {useAnimeCharacterDataStore} from './CharacterDataStore';
+import {useAnimeCharacterDataStore} from '../data/CharacterDataStore';
 import {checkIfReachedMaxItemCountUseCase} from './CheckIfReachedMaxItemCount';
 import {getListItemsUseCase} from './GetListItemsUseCase';
 
@@ -13,27 +13,23 @@ export function useGetCharactersByPageUseCase() {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const queryResultsRef = useRef<Results<AnimeCharacter> | null>(null);
   const page = useRef<number>(1);
-  const charactersRepository = useAnimeCharacterDataStore();
-  const shouldBuildList = useRef(true);
+  const charactersDataStore = useAnimeCharacterDataStore();
 
   useEffect(() => {
-    const query: Results<AnimeCharacter> = charactersRepository.getAll();
+    const query: Results<AnimeCharacter> = charactersDataStore.getAll();
     // Hold on to query results for paging in the future
     queryResultsRef.current = query;
 
     const queryChangeListener = () => {
-      console.log('ZOL');
       queryResultsRef.current = query; // Query gets updated in real time so this should have the latest results
       // Grab items for page
 
-      console.log(`My List ${JSON.stringify(query[0])}`);
       const listItems: CharacterListUiItem[] = getListItemsUseCase(
         queryResultsRef.current,
         0,
         PAGE_SIZE,
         page.current,
       );
-      console.log(`My List ${JSON.stringify(listItems[0])}`);
       setItems(listItems);
       setIsLoading(false);
     };

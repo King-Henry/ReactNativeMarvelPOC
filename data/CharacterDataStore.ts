@@ -1,10 +1,10 @@
 import {Results} from 'realm';
-import {AnimeCharacter} from '../data/AnimeCharacter';
-import {LocalDataBaseContext, useLocalDataBase} from './LocalDataStore';
+import {AnimeCharacter} from './AnimeCharacter';
+import {LocalDataBaseContext, useLocalDataBase} from './LocalDataBase';
 import {useContext, useEffect, useState} from 'react';
-import {ParsedCharacter} from '../data/ParsedCharacter';
-import {getCharacters} from '../data/ApiService';
-import {saveParsedCharactersToRealmUseCase} from './SaveParsedCharactersToRealmUseCase';
+import {ParsedCharacter} from './ParsedCharacter';
+import {getCharacters} from './ApiService';
+import {saveParsedCharactersToRealmUseCase} from '../domain/SaveParsedCharactersToRealmUseCase';
 
 // interface Repository<MutableModel, Model> {
 //     create(mutable: MutableModel): boolean;

@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { Results } from "realm";
 import { AnimeCharacter } from "../data/AnimeCharacter";
 import { CharacterListUiItem } from "../ui/CharacterListUiItem";
-import { useAnimeCharacterRepository } from "./CharacterRepository";
-import { checkIfReachedMaxItemCountUseCase } from "./CheckIfReachedMaxItemCount";
+import { useAnimeCharacterRepository } from "../data/CharacterRepository";
+import { checkIfReachedMaxItemCountUseCase } from "./CheckIfReachedMaxItemCountUseCase";
 import { getListItemsUseCase } from "./GetListItemsUseCase";
 
 const PAGE_SIZE = 100;

@@ -1,6 +1,6 @@
 import { Results } from "realm";
-import { AnimeCharacter } from "../data/AnimeCharacter"
-import { useLocalDataStore } from "./LocalDataStore";
+import { AnimeCharacter } from "./AnimeCharacter"
+import { useLocalDataStore } from "./UseLocalDataStore";
 
 // interface Repository<MutableModel, Model> {
 //     create(mutable: MutableModel): boolean;

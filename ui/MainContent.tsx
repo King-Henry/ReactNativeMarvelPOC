@@ -1,6 +1,6 @@
 import React from "react"
 import { ActivityIndicator, FlatList, SafeAreaView, View } from "react-native"
-import { useMainViewModel } from "../domain/MainViewModel"
+import { useMainHookContainer } from "./MainHookContainer"
 import { loaderStyles, listStyle } from "../styles"
 import { CharacterListUiItem } from "./CharacterListUiItem"
 import CharacterRow from "./CharacterRow"
@@ -9,7 +9,7 @@ export function MainContent(): React.JSX.Element {
     console.log("RENDERING MAIN CONTENT")
   
     // Subscribe to Realm updates to receive fetched characters
-    const { items, allLoadingComplete, getNextPage } = useMainViewModel()
+    const { items, allLoadingComplete, getNextPage } = useMainHookContainer()
   
     if(!allLoadingComplete) {
       return (

@@ -1,15 +1,11 @@
 // import React from "react"
 // import { CharacterListUiItem } from "../ui/CharacterListUiItem"
 import React, { useEffect } from "react"
-import { GetParsedCharactersResult, useFetchAndStoreCharacters } from "./GetParsedCharactersForPage"
-import { useSubscribeToCharacterListUiItems } from "./SubscribeToCharacterListUiItems"
-
-interface MainVieModel {
-
-}
+import { GetParsedCharactersResult, useFetchAndStoreCharacters } from "../domain/UseGetParsedCharactersForPage"
+import { useSubscribeToCharacterListUiItems } from "../domain/UseSubscribeToCharacterListUiItems"
 
 // Should return actions and state
-export const useMainViewModel = () => {
+export const useMainHookContainer = () => {
     // Used to trigger the subscription to the character list
     const [shouldSubscribe, setShouldSubscribe] = React.useState<boolean>(false)
 

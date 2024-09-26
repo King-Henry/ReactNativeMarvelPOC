@@ -1,6 +1,6 @@
 import { AnimeCharacter } from "../data/AnimeCharacter";
 import { ParsedCharacter } from "../data/ParsedCharacter";
-import { Repository } from "./CharacterRepository";
+import { Repository } from "../data/CharacterRepository";
 
 export function saveParsedCharactersToRealmUseCase(remoteCharacters: ParsedCharacter[], repository: Repository<AnimeCharacter>): boolean {
     try {

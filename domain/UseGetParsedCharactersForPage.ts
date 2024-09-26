@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCharactersRemote } from "../data/ApiService";
 import { ParsedCharacter } from "../data/ParsedCharacter";
-import { useAnimeCharacterRepository } from "./CharacterRepository";
+import { useAnimeCharacterRepository } from "../data/CharacterRepository";
 import { saveParsedCharactersToRealmUseCase } from "./SaveParsedCharactersToRealmUseCase";
 
 export function useFetchAndStoreCharacters()  {

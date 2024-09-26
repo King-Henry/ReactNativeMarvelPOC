@@ -1,13 +1,6 @@
 // import React from "react"
 // import { CharacterListUiItem } from "../ui/CharacterListUiItem"
-import React, {useEffect} from 'react';
-import {
-  GetParsedCharactersResult,
-  useGetParsedCharacters,
-} from '../domain/GetParsedCharactersForPage';
-import {useGetCharactersByPageUseCase} from '../domain/SubscribeToCharacterListUiItems';
-
-interface MainVieModel {}
+import {useGetCharactersByPageUseCase} from '../domain/UseGetCharactersByPageUseCase';
 
 // Should return actions and state
 export const useMainViewModel = () => {

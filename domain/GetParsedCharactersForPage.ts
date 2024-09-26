@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import {getCharacters} from '../data/ApiService';
 import {ParsedCharacter} from '../data/ParsedCharacter';
-import {transformApiResponseToCharactersUseCase} from './ApiResponseToCharactersUseCase';
 import {useAnimeCharacterDataStore} from '../data/CharacterDataStore';
 import {saveParsedCharactersToRealmUseCase} from './SaveParsedCharactersToRealmUseCase';
 

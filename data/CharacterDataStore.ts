@@ -1,6 +1,6 @@
 import {Results} from 'realm';
 import {AnimeCharacter} from './AnimeCharacter';
-import {LocalDataBaseContext, useLocalDataBase} from './LocalDataBase';
+import {LocalDataBaseContext} from './LocalDataBase';
 import {useContext, useEffect, useState} from 'react';
 import {ParsedCharacter} from './ParsedCharacter';
 import {getCharacters} from './ApiService';

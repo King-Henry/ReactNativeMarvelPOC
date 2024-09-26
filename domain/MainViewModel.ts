@@ -1,7 +1,7 @@
 // import React from "react"
 // import { CharacterListUiItem } from "../ui/CharacterListUiItem"
 import React, { useEffect } from "react"
-import { GetParsedCharactersResult, useGetParsedCharacters } from "./GetParsedCharactersForPage"
+import { GetParsedCharactersResult, useFetchAndStoreCharacters } from "./GetParsedCharactersForPage"
 import { useSubscribeToCharacterListUiItems } from "./SubscribeToCharacterListUiItems"
 
 interface MainVieModel {
@@ -14,10 +14,10 @@ export const useMainViewModel = () => {
     const [shouldSubscribe, setShouldSubscribe] = React.useState<boolean>(false)
 
     // Fetch and save characters to db
-    const { result } = useGetParsedCharacters()
+    const { result } = useFetchAndStoreCharacters()
 
     // Load items from db and build ui models
-    const { items, error, isLoading, getNextPage, getPreviousPage } = useSubscribeToCharacterListUiItems(shouldSubscribe)
+    const { items, isLoading, getNextPage } = useSubscribeToCharacterListUiItems(shouldSubscribe)
 
     useEffect(() => {
         let finished = result !== GetParsedCharactersResult.Pending 
@@ -29,8 +29,8 @@ export const useMainViewModel = () => {
 
     
     const allLoadingComplete = result !== GetParsedCharactersResult.Pending && !isLoading
-    console.log(`allLoadingComplete: ${allLoadingComplete}`)
+    const fetchError = result === GetParsedCharactersResult.Failure
 
-    return { items, allLoadingComplete, error, getNextPage, getPreviousPage }
+    return { items, fetchError, allLoadingComplete, getNextPage }
 
 }

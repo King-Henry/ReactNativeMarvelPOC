@@ -15,7 +15,6 @@ export function useSubscribeToCharacterListUiItems(shouldBuildList: boolean) {
     const page = useRef<number>(1)
     const charactersRepository = useAnimeCharacterRepository()
     
-    
     useEffect(() => {
         if(!shouldBuildList) {
             return;
@@ -51,9 +50,5 @@ export function useSubscribeToCharacterListUiItems(shouldBuildList: boolean) {
         setItems(listItems)
     }
 
-    const getPreviousPage = () => {
-
-    }
-
-    return { items, isLoading, getNextPage, getPreviousPage }
+    return { items, isLoading, getNextPage }
 }

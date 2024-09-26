@@ -1,4 +1,3 @@
-import { Realm, useObject } from "@realm/react";
 import { AnimeCharacter } from "../data/AnimeCharacter";
 import { ParsedCharacter } from "../data/ParsedCharacter";
 import { Repository } from "./CharacterRepository";

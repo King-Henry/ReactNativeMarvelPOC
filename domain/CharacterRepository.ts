@@ -35,9 +35,9 @@ export const useAnimeCharacterRepository = (): Repository<AnimeCharacter> => {
     }
 
     // Filter/sort results in use case?
-    const getAllCharacters = (): Results<AnimeCharacter> => {
+    const getAll = (): Results<AnimeCharacter> => {
         return dataStore.queryForObjectOfType(AnimeCharacter.realmName)
     }
 
-    return { create, get, update, remove, getAll: getAllCharacters }
+    return { create, get, update, remove, getAll }
 }

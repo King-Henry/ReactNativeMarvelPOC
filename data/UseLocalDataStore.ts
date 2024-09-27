@@ -1,6 +1,14 @@
 import { useRealm } from "@realm/react"
 import Realm, { Results, UpdateMode } from "realm"
 
+export interface LocalDataStore { 
+    create<T extends Realm.Object<T>>(type: string, model: T | Partial<T>): boolean,
+    get<T extends Realm.Object<T>>(type: string, id: string | number): T | null,
+    update<T extends Realm.Object<T>>(type: string, model: T | Partial<T>): boolean,
+    deleteModel(type: string, id: string | number): boolean,
+    queryForObjectOfType<T extends Realm.Object<T>>(type: string): Results<T>
+}
+
 export const useLocalDataStore = () => {
     const realm = useRealm()
 

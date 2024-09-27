@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { Results } from "realm";
 import { AnimeCharacter } from "./AnimeCharacter"
+import { LocalDataStoreContext } from "./LocalDataStoreContext";
 import { useLocalDataStore } from "./UseLocalDataStore";
 
 // interface Repository<MutableModel, Model> {
@@ -16,7 +18,11 @@ export interface Repository<T> {
 }
 
 export const useAnimeCharacterRepository = (): Repository<AnimeCharacter> => { 
-    const dataStore = useLocalDataStore()
+    const dataStore = useContext(LocalDataStoreContext)
+
+    if(dataStore === null) { 
+        throw new Error("LocalDataStoreContext is null")
+    }
 
     const create = (character: AnimeCharacter | Partial<AnimeCharacter>): boolean => {
         return dataStore.create<AnimeCharacter>(AnimeCharacter.realmName, character)

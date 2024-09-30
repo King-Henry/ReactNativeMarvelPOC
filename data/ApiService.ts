@@ -1,9 +1,14 @@
-import { buildUrl } from "../domain/ApiUrlBuilder"
+import {transformApiResponseToCharactersUseCase} from '../domain/ApiResponseToCharactersUseCase';
+import {buildUrlUseCase} from '../domain/buildApiUrlUseCase';
+import {ParsedCharacter} from './ParsedCharacter';
 
-export async function getCharacters(limit: number, offset: number): Promise<any> {
-    return fetch(buildUrl(limit, offset))
-        .then(res => {
-            console.log("Api call successful")
-            return res.json()
-        })
+export async function getCharacters(limit: number): Promise<ParsedCharacter[]> {
+  return fetch(buildUrlUseCase(limit))
+    .then(res => {
+      console.log('Api call successful');
+      return res.json();
+    })
+    .then(res => {
+      return transformApiResponseToCharactersUseCase(res);
+    });
 }

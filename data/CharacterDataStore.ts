@@ -6,17 +6,13 @@ import {ParsedCharacter} from './ParsedCharacter';
 import {getCharacters} from './ApiService';
 import {saveParsedCharactersToRealmUseCase} from '../domain/SaveParsedCharactersToRealmUseCase';
 
-// interface Repository<MutableModel, Model> {
-//     create(mutable: MutableModel): boolean;
-//     get(id: number | number): Model | null;
-// }
-
 export interface DataStore<T> {
   create(model: T | Partial<T>): boolean;
   get(id: number): T | null;
   update(model: T): boolean;
   remove(id: number): boolean;
   getAll(): Results<T>;
+  initializationResult: GetParsedCharactersResult;
 }
 
 export enum GetParsedCharactersResult {
@@ -25,11 +21,16 @@ export enum GetParsedCharactersResult {
   Pending,
 }
 
+//UPDATE TO USE RN REALM NOT JS REALM
 export const useAnimeCharacterDataStore = (): DataStore<AnimeCharacter> => {
   const db = useContext(LocalDataBaseContext);
-  console.log('Is this First?');
+  if (db === null) {
+    throw Error;
+  }
 
-  const [result, setResult] = useState(GetParsedCharactersResult.Pending);
+  const [initializationResult, setResult] = useState(
+    GetParsedCharactersResult.Pending,
+  );
 
   const create = (
     character: AnimeCharacter | Partial<AnimeCharacter>,
@@ -56,44 +57,12 @@ export const useAnimeCharacterDataStore = (): DataStore<AnimeCharacter> => {
     return db.queryForObjectOfType(AnimeCharacter.realmName);
   };
 
-  //   function saveParsedCharactersToRealmUseCase(
-  //     remoteCharacters: ParsedCharacter[],
-  //   ): boolean {
-  //     try {
-  //       remoteCharacters.forEach(remoteCharacter => {
-  //         const existingObject = get(remoteCharacter.id);
-  //         // console.log(`ExistingObject - ${!existingObject}`)
-  //         const character: AnimeCharacter | Partial<AnimeCharacter> = {
-  //           _id: remoteCharacter.id,
-  //           name: remoteCharacter.name,
-  //           fullImage: remoteCharacter.fullImage,
-  //           thumbnailImage: remoteCharacter.thumbnailImage,
-  //         };
-  //         if (!existingObject) {
-  //           create(character);
-  //         }
-  //       });
-  //       return true;
-  //     } catch (error) {
-  //       console.log(`saveParsedCharactersToRealmUseCase() error -- ` + error);
-  //       return false;
-  //     }
-  //   }
-
   useEffect(() => {
-    console.log('OR IS THIS FIRST');
     const fetchAndSaveToRealm = async () => {
       try {
-        const parsedCharacters: ParsedCharacter[] = await getCharacters(20, 0);
-        // const parsedCharacters: ParsedCharacter[] = transformApiResponseToCharactersUseCase(json)
-        // await prefetchCharacterImagesUseCase(parsedCharacters)
-        const success = saveParsedCharactersToRealmUseCase(
-          create,
-          get,
-          parsedCharacters,
-        );
+        const parsedCharacters: ParsedCharacter[] = await getCharacters(1429);
+        saveParsedCharactersToRealmUseCase(create, get, parsedCharacters);
         setResult(GetParsedCharactersResult.Success);
-        //buildList();
       } catch (error) {
         console.log(`GetParsedCharactersForPage() error -- ` + error);
         setResult(GetParsedCharactersResult.Failure);
@@ -103,5 +72,12 @@ export const useAnimeCharacterDataStore = (): DataStore<AnimeCharacter> => {
     fetchAndSaveToRealm();
   }, []);
 
-  return {create, get, update, remove, getAll: getAllCharacters, result};
+  return {
+    create,
+    get,
+    update,
+    remove,
+    getAll: getAllCharacters,
+    initializationResult,
+  };
 };

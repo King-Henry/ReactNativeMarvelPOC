@@ -1,11 +1,5 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  SafeAreaView,
-  View,
-  Text,
-} from 'react-native';
-import {useMainViewModel} from './MainViewModel';
+import {ActivityIndicator, FlatList, SafeAreaView, View} from 'react-native';
+import {useMainHookContainer} from './MainHookContainer';
 import React from 'react';
 import {listStyle, loaderStyles} from '../styles';
 import {CharacterListUiItem} from './CharacterListUiItem';
@@ -15,9 +9,11 @@ export function MainContent(): React.JSX.Element {
   console.log('RENDERING MAIN CONTENT');
 
   // Subscribe to Realm updates to receive fetched characters
-  const {items, error, getNextPage} = useMainViewModel();
+  const {listItems, getNextPage} = useMainHookContainer();
 
-  if (items.length < 1) {
+  console.log(listItems.length);
+
+  if (listItems.length < 1) {
     return (
       <View style={loaderStyles.centeredLoader}>
         <ActivityIndicator size="large" />
@@ -25,20 +21,17 @@ export function MainContent(): React.JSX.Element {
     );
   }
 
-  if (error) {
-    console.log(`ERROR: ${error}`);
-    return <Text>ERROR</Text>;
-  }
-
   return (
     <SafeAreaView style={listStyle.listContainer}>
-      <FlatList
-        data={items}
-        onEndReached={getNextPage}
-        onEndReachedThreshold={8}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => listItemToUiRow(item)}
-      />
+      <View style={{flex: 1, flexDirection: 'row'}}>
+        <FlatList
+          data={listItems}
+          onEndReached={getNextPage}
+          onEndReachedThreshold={8}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}) => listItemToUiRow(item)}
+        />
+      </View>
     </SafeAreaView>
   );
 }

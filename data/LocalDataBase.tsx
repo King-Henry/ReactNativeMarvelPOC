@@ -1,7 +1,8 @@
-import {useRealm} from '@realm/react';
+import {useQuery, useRealm} from '@realm/react';
 import React from 'react';
 import Realm, {Results, UpdateMode} from 'realm';
 
+//UPDATE TO USE RN REALM NOT JS REALM
 export const useLocalDataBase = () => {
   const realm = useRealm();
 
@@ -71,17 +72,21 @@ export const useLocalDataBase = () => {
   const queryForObjectOfType = <T extends Realm.Object<T>>(
     type: string,
   ): Results<T> => {
-    return realm.objects<T>(type);
+    return useQuery({type: type});
   };
 
   return {create, get, update, deleteModel, queryForObjectOfType};
 };
 
-export const LocalDataBaseContext = React.createContext<
-  ReturnType<typeof useLocalDataBase>
->({} as any);
+export const LocalDataBaseContext = React.createContext<ReturnType<
+  typeof useLocalDataBase
+> | null>(null);
 
-export const LocalDataBaseProvider: React.FC = ({children}) => {
+export const LocalDataBaseProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const localDataStore = useLocalDataBase();
 
   return (

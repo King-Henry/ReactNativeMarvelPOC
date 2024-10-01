@@ -1,6 +1,6 @@
-import {transformApiResponseToCharactersUseCase} from '../domain/ApiResponseToCharactersUseCase';
-import {buildUrlUseCase} from '../domain/buildApiUrlUseCase';
-import {ParsedCharacter} from './ParsedCharacter';
+import { transformApiResponseToCharactersUseCase } from '../domain/ApiResponseToCharactersUseCase';
+import { buildUrlUseCase } from '../domain/BuildApiUrlUseCase';
+import { ParsedCharacter } from './ParsedCharacter';
 
 export async function getCharacters(limit: number): Promise<ParsedCharacter[]> {
   return fetch(buildUrlUseCase(limit))

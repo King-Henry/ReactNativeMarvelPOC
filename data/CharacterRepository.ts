@@ -11,7 +11,7 @@ import { useLocalDataStore } from "./UseLocalDataStore";
 
 export interface Repository<T> {
     create(model: T | Partial<T>) : boolean,
-    get(id: number) : T | null
+    get(id: number | string) : T | null
     update(model: T) : boolean,
     remove(id: number) : boolean,
     getAll() : Results<T>
@@ -28,7 +28,8 @@ export const useAnimeCharacterRepository = (): Repository<AnimeCharacter> => {
         return dataStore.create<AnimeCharacter>(AnimeCharacter.realmName, character)
     }
 
-    const get = (id: number): AnimeCharacter | null => {
+    const get = (id: number | string): AnimeCharacter | null => {
+        
         return dataStore.get(AnimeCharacter.realmName, id)
     }
 

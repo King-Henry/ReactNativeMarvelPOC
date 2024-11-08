@@ -14,11 +14,15 @@ import {
 
 import { RealmProvider } from '@realm/react'
 import { AnimeCharacter } from './data/AnimeCharacter'
-import { MainContent } from './ui/MainContent';
 import { LocalDataStoreProvider } from './data/LocalDataStoreContext';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ListScreen } from './ui/ListScreen';
+import { CharacterDetailScreen } from './ui/CharacterDetailScreen';
 
 
 const queryClient: QueryClient = new QueryClient()
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 
 function App(): React.JSX.Element {
@@ -26,12 +30,25 @@ function App(): React.JSX.Element {
     <QueryClientProvider client={queryClient}>
       <RealmProvider schema={[AnimeCharacter]}>
         <LocalDataStoreProvider>
-          <MainContent/>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName='CharacterList'>
+              <Stack.Screen name="CharacterList" component={ListScreen}/>
+              <Stack.Screen name='CharacterDetail' component={CharacterDetailScreen}/>
+            </Stack.Navigator>
+          </NavigationContainer>
         </LocalDataStoreProvider>
       </RealmProvider>
     </QueryClientProvider>
   )
-  
 }
+
+export type RootStackParamList = {
+  CharacterList: undefined;
+  CharacterDetail: { characterId: number };
+}
+
+export type CharacterListProps = NativeStackScreenProps<RootStackParamList, 'CharacterList'>
+export type CharacterDetailProps = NativeStackScreenProps<RootStackParamList, 'CharacterDetail'>
+
 
 export default App;

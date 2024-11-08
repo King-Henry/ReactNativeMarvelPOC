@@ -4,8 +4,15 @@ import { useMainHookContainer } from "./MainHookContainer"
 import { loaderStyles, listStyle } from "../styles"
 import { CharacterListUiItem } from "./CharacterListUiItem"
 import CharacterRow from "./CharacterRow"
+import { CharacterListProps } from "../App"
 
-export function MainContent(): React.JSX.Element {
+export function ListScreen(navProps : CharacterListProps): React.JSX.Element {
+    return (
+      <CharacterList navigation={navProps.navigation} route={navProps.route} />
+    )
+}
+
+function CharacterList(navProps: CharacterListProps): React.JSX.Element {
     console.log("RENDERING MAIN CONTENT")
   
     // Subscribe to Realm updates to receive fetched characters
@@ -32,15 +39,16 @@ export function MainContent(): React.JSX.Element {
           onEndReached={getNextPage}
           onEndReachedThreshold={8}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({item}) => listItemToUiRow(item)} />
+          renderItem={({item}) => listItemToUiRow(item, navProps)} />
       </SafeAreaView>
     )
   }
   
-  const onRowClick = (id: number): void => {
-    console.log("Clicked on item: " + id)
+  const listItemToUiRow = (item: CharacterListUiItem, navProps: CharacterListProps): React.JSX.Element => {
+    return <CharacterRow uiModel={item} clickListener={() => onRowClick({ id: item.id, navProps: navProps }) }/>
   }
-  
-  const listItemToUiRow = (item: CharacterListUiItem): React.JSX.Element => {
-    return <CharacterRow uiModel={item} clickListener={onRowClick}>{item.id}</CharacterRow>
+
+  const onRowClick = ({ id, navProps }: { id: number, navProps: CharacterListProps }): void => {
+    console.log("Clicked on item: " + id)
+    navProps.navigation.navigate("CharacterDetail", { characterId: id })
   }

@@ -9,10 +9,10 @@ type ContainerProps = PropsWithChildren<{
     clickAction: (id: number) => void
 }>
 
-export type  CharacterRowProps = PropsWithChildren<{
+export type CharacterRowProps = {
     uiModel: CharacterListUiItem,
     clickListener: (id: number) => void
-}>
+}
 
 function CharacterRow(props: CharacterRowProps): React.JSX.Element {
     if(props.uiModel.id == 344) {
@@ -25,7 +25,7 @@ function CharacterRow(props: CharacterRowProps): React.JSX.Element {
                  <Image 
                     source={{uri: props.uiModel.thumbnailUrl}} 
                     recyclingKey={props.uiModel.id.toString()}
-                    cachePolicy={'disk'}
+                    cachePolicy={'memory-disk'}
                     style={rowStyles.rowCircularImage} 
                     onError={(event: ImageErrorEventData)=> console.log("ERROR LOADING - " + props.uiModel.id + " - " + props.uiModel.thumbnailUrl + " - " + event.error)} />
                  <View style={{flex:1}}>

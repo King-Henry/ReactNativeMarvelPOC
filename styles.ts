@@ -42,6 +42,27 @@ export const styles = StyleSheet.create({
       }
   });
 
+  export const infoRowStyles = StyleSheet.create({
+    rowContainer: {
+      height: 64,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      flexDirection: 'column',
+      alignItems: 'flex-start'
+    },
+    rowHeader: {
+      fontSize: 18,
+      fontWeight: '600',
+    },
+    rowSubheader: {
+      fontSize: 14,
+    },
+    rowImage: {
+      width: 48,
+      height: 48,
+    },
+  })
+
   export const listStyle = StyleSheet.create({
     listContainer: {
       flex: 1
@@ -52,5 +73,12 @@ export const styles = StyleSheet.create({
     centeredLoader: {
       flex: 1,
       justifyContent: 'center',
+    }
+  })
+
+  export const imageStyles = StyleSheet.create({
+    fullImage: {
+        width: '100%',
+        height: 300
     }
   })

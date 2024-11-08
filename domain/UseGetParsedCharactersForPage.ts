@@ -10,7 +10,7 @@ export function useFetchAndStoreCharacters()  {
     useEffect(() => {
         const fetchAndSaveToRealm = async () => {
             try {
-                const parsedCharacters: ParsedCharacter[] = await getCharactersRemote(20, 0)
+                const parsedCharacters: ParsedCharacter[] = await getCharactersRemote(1400, 0)
                 const success = saveParsedCharactersToRealmUseCase(parsedCharacters, repository)
                 const result = success ? GetParsedCharactersResult.Success : GetParsedCharactersResult.Failure
                 setResult(result)
